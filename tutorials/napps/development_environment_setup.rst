@@ -133,7 +133,7 @@ kytos-utils and kytos projects locally.
 .. code-block:: shell
 
   for repo in python-openflow kytos-utils kytos; do
-    git clone https://github.com/kytos/${repo}
+    git clone https://github.com/kytos-ng/"${repo}"
   done
 
 After cloning, the Kytos installation process is done running setuptools installation
@@ -142,7 +142,7 @@ procedure for each cloned repository, in order. Below we execute its commands.
 .. code-block:: shell
 
     for repo in python-openflow kytos-utils kytos; do
-      cd ${repo}
+      cd "${repo}"
       python3 setup.py develop
       cd ..
     done
@@ -158,7 +158,7 @@ and run:
 .. code-block:: console
 
   $ source test42/bin/activate
-  $ git clone https://github.com/kytos/storehouse
+  $ git clone https://github.com/kytos-ng/storehouse
   $ cd storehouse
   $ pip install -r requirements/dev.txt
   $ python3 setup.py develop
