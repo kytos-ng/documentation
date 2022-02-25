@@ -16,7 +16,7 @@ First you need to clone *kytos* repository:
 
 .. code-block:: shell
 
-   $ git clone https://github.com/kytos/kytos.git
+   $ git clone https://github.com/kytos-ng/kytos.git
 
 After cloning, the installation process is done by standard `setuptools`
 install procedure:
