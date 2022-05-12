@@ -173,16 +173,16 @@ and run:
     explained, as well as NApp management, in the next tutorials.
 
 Now that Kytos is running, switch back to the previous window and install the
-NApps using the ``kytos`` command line utility. You will also disable the NApps,
+NApps using the github command line utility. You will also disable the NApps,
 just for now.
+
+of_core:
 
 .. code-block:: console
 
-  $ kytos napps install kytos/of_core \
-     kytos/flow_manager \
-     kytos/topology \
-     kytos/of_l2ls \
-     kytos/of_lldp
+  $ git clone https://github.com/kytos-ng/of_core.git
+  $ cd of_core
+  $ python setup.py develop
 
 
   $ kytos napps disable all
