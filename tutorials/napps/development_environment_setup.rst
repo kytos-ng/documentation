@@ -173,8 +173,7 @@ and run:
     explained, as well as NApp management, in the next tutorials.
 
 Now that Kytos is running, switch back to the previous window and install the
-NApps using the github command line utility. You will also disable the NApps,
-just for now.
+NApps using the github command line utility.
 
 of_core:
 
@@ -184,6 +183,49 @@ of_core:
   $ cd of_core
   $ python setup.py develop
 
+flow_manager:
+
+before installing flow_manager you must installl storehouse
+
+.. code-block:: console
+
+  $ git clone https://github.com/kytos-ng/storehouse.git
+  $ cd storehouse
+  $ python setup.py develop
+
+  #now install flow_manager
+
+  $ git clone https://github.com/kytos-ng/flow_manager.git
+  $ cd flow_manager
+  $ python setup.py develop
+
+topology:
+
+.. code-block:: console
+
+  $ git clone https://github.com/kytos-ng/topology.git
+  $ cd topology
+  $ python setup.py develop
+
+of_lldp:
+
+.. code-block:: console
+
+  $ git clone https://github.com/kytos-ng/of_lldp.git
+  $ cd of_lldp
+  $ python setup.py develop
+
+of_l2ls:
+
+.. code-block:: console
+
+  $ git clone https://github.com/kytos-ng/of_l2ls.git
+  $ cd of_l2ls
+  $ python setup.py develop
+
+now disable all napps
+
+.. code-block:: console
 
   $ kytos napps disable all
 
