@@ -234,14 +234,14 @@ of_core:
 
 flow_manager, topology, of_lldp, of_l2ls:
 
-.. code-block:: console
+.. code-block:: shell
 
   for repo in of_core storehouse flow_manager topology of_lldp of_l2ls; do
     git clone https://github.com/kytos-ng/"${repo}"
   done
 
 
-.. code-block:: console
+.. code-block:: shell
 
   for repo in of_core storehouse flow_manager topology of_lldp of_l2ls; do
     cd "${repo}"
