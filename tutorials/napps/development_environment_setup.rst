@@ -38,10 +38,10 @@ Installing required dependencies
 ********************************
 
 In order to start using and coding with Kytos, you need a few required
-dependencies. One of them is Python 3.9.
+dependencies. One of them is Python 3.9.x
 
 
-Installing Python 3.9
+Installing Python 3.9.x
 =====================
 
 Install the dependencies necessary to build Python:
@@ -128,7 +128,7 @@ by another name, if you wish):
 This command will create a virtualenv named *test42* and a folder with the same
 name for it.
 
-.. NOTE:: Kytos requires Python 3.9
+.. NOTE:: Kytos requires Python 3.9.x
 
 Removing a virtualenv
 ---------------------
