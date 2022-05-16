@@ -97,7 +97,7 @@ The required Ubuntu packages can be installed by:
 
 .. code-block:: console
 
-  $ apt install git libpython3-dev python3 python3-venv
+  $ apt install git libpython3.9-dev python3.9 python3.9-venv
 
 
 ********************************
@@ -123,7 +123,7 @@ by another name, if you wish):
 
 .. code-block:: console
 
-   $ python3 -m venv test42
+   $ python3.9 -m venv test42
 
 This command will create a virtualenv named *test42* and a folder with the same
 name for it.
@@ -224,15 +224,8 @@ and run:
 Now that Kytos is running, switch back to the previous window and install the
 NApps using the github command line utility.
 
-of_core:
 
-.. code-block:: console
-
-  $ git clone https://github.com/kytos-ng/of_core.git
-  $ cd of_core
-  $ python setup.py develop
-
-flow_manager, topology, of_lldp, of_l2ls:
+of_core, flow_manager, topology, of_lldp, of_l2ls:
 
 .. code-block:: shell
 
