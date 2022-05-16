@@ -40,15 +40,6 @@ Installing required dependencies
 In order to start using and coding with Kytos, you need a few required
 dependencies. One of them is Python 3.9.
 
-Required packages
-=================
-
-The required Ubuntu packages can be installed by:
-
-.. code-block:: console
-
-  $ apt install git libpython3-dev python3 python3-venv
-
 
 Installing Python 3.9
 =====================
@@ -99,6 +90,15 @@ That’s it. Python 3.9 has been installed and ready to be used. To verify it, t
 
  python3.9 --version
  
+Required packages
+=================
+
+The required Ubuntu packages can be installed by:
+
+.. code-block:: console
+
+  $ apt install git libpython3-dev python3 python3-venv
+
 
 ********************************
 Setting up a virtual environment
