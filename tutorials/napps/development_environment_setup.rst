@@ -7,7 +7,7 @@
 Setting up your dev environment
 ###############################
 
-.. NOTE:: We tested this tutorial on Ubuntu, but feel free to adapt to your
+.. NOTE:: We tested this tutorial on Ubuntu 20.04 LTS, but feel free to adapt to your
   preferred Linux distribution.
 
 ********
