@@ -97,7 +97,7 @@ The required Ubuntu packages can be installed by:
 
 .. code-block:: console
 
-  $ apt install git libpython3.9-dev python3.9 python3.9-venv
+  $ apt install git
 
 
 ********************************
