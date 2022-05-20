@@ -7,7 +7,7 @@
 Setting up your dev environment
 ###############################
 
-.. NOTE:: We tested this tutorial on Ubuntu, but feel free to adapt to your
+.. NOTE:: We tested this tutorial on Ubuntu 20.04 LTS, but feel free to adapt to your
   preferred Linux distribution.
 
 ********
@@ -38,8 +38,58 @@ Installing required dependencies
 ********************************
 
 In order to start using and coding with Kytos, you need a few required
-dependencies. One of them is Python 3.6 or greater.
+dependencies. One of them is Python 3.9.x
 
+
+Installing Python 3.9.x
+=====================
+
+Install the dependencies necessary to build Python:
+
+.. code-block:: console
+
+ sudo apt update
+ sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev
+
+Download the latest release’s source code from the Python download page with wget :
+
+.. code-block:: console
+ 
+ wget https://www.python.org/ftp/python/3.9.1/Python-3.9.1.tgz
+
+Once the download is complete, extract the gzipped archive :
+
+.. code-block:: console
+
+ tar -xf Python-3.9.1.tgz
+
+Switch to the Python source directory and run the configure script, which performs a number of checks to make sure all of the dependencies on your system are present:
+
+.. code-block:: console
+
+ cd Python-3.9.1
+ ./configure --enable-optimizations
+
+Start the Python 3.9 build process:
+
+.. code-block:: console
+
+ make -j 12
+
+For faster build time, modify the -j to correspond to the number of cores in your processor. You can find the number by typing nproc.
+
+When the build process is complete, install the Python binaries by typing:
+
+.. code-block:: console
+
+ sudo make altinstall
+
+That’s it. Python 3.9 has been installed and ready to be used. To verify it, type:
+
+.. code-block:: console
+
+ python3.9 --version
+ 
 Required packages
 =================
 
@@ -47,7 +97,8 @@ The required Ubuntu packages can be installed by:
 
 .. code-block:: console
 
-  $ apt install git libpython3-dev python3 python3-venv
+  $ apt install git
+
 
 ********************************
 Setting up a virtual environment
@@ -72,12 +123,12 @@ by another name, if you wish):
 
 .. code-block:: console
 
-   $ python3 -m venv test42
+   $ python3.9 -m venv test42
 
 This command will create a virtualenv named *test42* and a folder with the same
 name for it.
 
-.. NOTE:: Kytos requires at least Python 3.6
+.. NOTE:: Kytos requires Python 3.9.x
 
 Removing a virtualenv
 ---------------------
@@ -160,30 +211,40 @@ and run:
   $ source test42/bin/activate
   $ git clone https://github.com/kytos-ng/storehouse
   $ cd storehouse
-  $ pip install -r requirements/dev.txt
+  $ pip3 install -r requirements/dev.txt
   $ python3 setup.py develop
   $ kytosd -f
 
 .. NOTE:: The ``git clone`` and ``pip install -r`` step was done to install NApp
-    dependencies. The NApps can be installed through
-    kytos command line utile (``kytos napps install <user/NApp_name>``) or
-    by cloning the source code and installing through the ``setup.py`` file.
+    dependencies. Currently, NApps should be installed by cloning the source code and installing through the setup.py file
 
 .. NOTE:: Don't worry about the Kytos main screen for now: we will have it
     explained, as well as NApp management, in the next tutorials.
 
 Now that Kytos is running, switch back to the previous window and install the
-NApps using the ``kytos`` command line utility. You will also disable the NApps,
-just for now.
+NApps using the github command line utility.
+
+
+of_core, flow_manager, topology, of_lldp, of_l2ls:
+
+.. code-block:: shell
+
+  for repo in of_core storehouse flow_manager topology of_lldp of_l2ls; do
+    git clone https://github.com/kytos-ng/"${repo}"
+  done
+
+
+.. code-block:: shell
+
+  for repo in of_core storehouse flow_manager topology of_lldp of_l2ls; do
+    cd "${repo}"
+    python3 setup.py develop
+    cd ..
+  done
+
+now disable all napps
 
 .. code-block:: console
-
-  $ kytos napps install kytos/of_core \
-     kytos/flow_manager \
-     kytos/topology \
-     kytos/of_l2ls \
-     kytos/of_lldp
-
 
   $ kytos napps disable all
 
