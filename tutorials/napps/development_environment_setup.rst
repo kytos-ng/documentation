@@ -211,7 +211,6 @@ and run:
   $ source test42/bin/activate
   $ git clone https://github.com/kytos-ng/storehouse
   $ cd storehouse
-  $ pip3 install -r requirements/dev.txt
   $ python3 setup.py develop
   $ kytosd -f
 
