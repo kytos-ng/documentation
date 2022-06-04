@@ -272,6 +272,23 @@ To test if the mininet is working for you, run the command:
 To see more about Mininet, you can access the webpage `mininet.org
 <http://mininet.org/walkthrough/>`_.
 
+How to use with MongoDB
+=======================
+
+Kytos with MongoDB requires docker and docker-compose to be installed on your linux environment. The following tutorials have been tested on Ubuntu 20.0.4 for docker and docker-compose
+
+Installing docker
+-----------------
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04 (Follow till Step 3 for installing required docker dependencies)
+
+Installing docker-compose
+-------------------------
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04 (Follow Step 1 only for successful docker-compose installation)
+
+After installing docker and docker-compose you can follow this link to setup Kytos with MongoDB: https://github.com/kytos-ng/kytos#how-to-use-with-mongodb
+
 .. include:: ../back_to_list.rst
 
 .. |kytos| replace:: *Kytos*
