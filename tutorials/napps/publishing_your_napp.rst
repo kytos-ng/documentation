@@ -12,7 +12,7 @@ Overview
 ********
 
 On this tutorial you will learn how to publish your NApp to a GitHub
-repository in order to share you NApp with the Kytos Community and also make
+repository in addition to that, share you NApp with the Kytos Community and also make
 easier for you to install it on your **Kytos** instance.
 
 The average time to go throught it is: ``5 min``
@@ -65,13 +65,13 @@ using your **username** (username should be same as your github account username
 
 The first question is related to your **username** (username should be same as your github account username).
 The second question is the name of your NApp, and, for now,
-we will just use ``<name>`` as NApp name. The third question is related
+we will just use ``MyfirstNapp`` as NApp name. The third question is related
 to your NApp description. Let's put some meaningful information over there.
 
 .. code:: console
 
   Please, insert your NApps Server username: <username>
-  Please, insert your NApp name: <name>
+  Please, insert your NApp name: MyfirstNapp
   Please, insert a brief description for your NApp [optional]: This is my first NApp, I have built it while doing a Kytos Tutorial.
 
 The NApps contains two important metadata files. The first one is the
@@ -102,7 +102,7 @@ as the mandatory ones. They also accept different values.
   `Semantic Versioning <http://semver.org/>`_.
 
 - **napp_dependencies**: A list of other NApps that are required by your NApp,
-  on the form ``["<username>/<name>", "<other_username>/<other_name>", ...]``
+  on the form ``["<username>/MyfirstNapp", "<other_username>/<other_name>", ...]``
 
 - **license**: The license of your NApp (*GPL*, *MIT*, *APACHE*, etc).
 
@@ -118,7 +118,7 @@ So, here is the **kytos.json** that we have initially generated.
 
   {
     "username": "<username>",
-    "name": <name>,
+    "name": "MyfirstNapp",
     "description": "This is my first NApp, I have built it while doing a Kytos Tutorial.",
     "version": "",
     "napp_dependencies": [],
@@ -133,7 +133,7 @@ And here are an example of how we can complete this file:
 
   {
     "username": "<username>",
-    "name": <name>,
+    "name": "MyfirstNapp",
     "description": "This is my first NApp, I have built it while doing a Kytos Tutorial.",
     "version": "0.0.1",
     "napp_dependencies": [],
@@ -146,7 +146,7 @@ README.rst
 ==========
 
 Among other things, the **README.rst** will be presented as the main content of
-the NApp page on |github|_  (https://github.com/<username>/<name>).
+the NApp page on |github|_  (https://github.com/<username>/MyfirstNapp).
 
 We recommend two initial sections, **Overview** and **Requirements**. The first
 will contain a more complete description of your NApp, while the latter will
@@ -177,10 +177,11 @@ After creating repository follow the below commands to initialize and push your 
 
 .. code-block:: console
 
-  $ cd ~/tutorials/<username>/<name>
+  $ cd ~/tutorials/<username>/MyfirstNapp
   $ git init
-  $ git remote add origin https://github.com/<username>/<name>.git
+  $ git remote add origin https://github.com/<username>/MyfirstNapp.git
   $ git add .
+  $ git commit -m "<you commit message>"
   $ git push -u origin master
 
 You will be asked to input your username and password of github, here password indicates generated token from github, View this |github_token|_ to generate your token.
@@ -201,15 +202,15 @@ Your NApp is now uploaded. You can see your NApp on the web: https://github.com/
 Search for and Install a remote NApp
 ************************************
 
-Now that you have published your NApp, you can find your NApp |kytos_page|_, you can also look for other NApps published.
+Now that you have published your NApp, you can find your NApp at |kytos_page|_, you can also look for other NApps published.
 
 * Select the napp you want to install
-* Clone the NApp you want to install by Folowing below commands
+* Clone the NApp you want to install by folowing below commands
 
 .. code-block:: console
 
-  $ git clone https://github.com/<username>/<name>.git
-  $ cd repoName
+  $ git clone https://github.com/<username>/MyfirstNapp.git
+  $ cd MyfirstNapp
   $ python setup.py develop
 
 
@@ -226,7 +227,7 @@ Now that your NApp is Intalled you can view in your console by using below comma
    [i-]  | kytos/of_l2ls             | An L2 learning switch application for OpenFlow swi...
    [i-]  | kytos/of_lldp             | Discovers switches and hosts in the network using ...
    [i-]  | kytos/of_stats            | Provide statistics of openflow switches.
-   [ie]  | <username>/<name>         | Description of your Napp
+   [ie]  | <username>/MyfirstNapp         | Description of your Napp
    [i-]  | kytos/topology            | Keeps track of links between hosts and switches. R...
 
   Status: (i)nstalled, (e)nabled
