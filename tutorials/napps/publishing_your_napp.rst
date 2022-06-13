@@ -65,13 +65,13 @@ using your **username** (username should be same as your github account username
 
 The first question is related to your **username** (username should be same as your github account username).
 The second question is the name of your NApp, and, for now,
-we will just use ``MyfirstNapp`` as NApp name. The third question is related
+we will just use ``my_first_napp`` as NApp name. The third question is related
 to your NApp description. Let's put some meaningful information over there.
 
 .. code:: console
 
   Please, insert your NApps Server username: <username>
-  Please, insert your NApp name: MyfirstNapp
+  Please, insert your NApp name: my_first_napp
   Please, insert a brief description for your NApp [optional]: This is my first NApp, I have built it while doing a Kytos Tutorial.
 
 The NApps contains two important metadata files. The first one is the
@@ -90,8 +90,8 @@ The **kytos.json** file contains the fields *username*, *name* (NApp name),
 **name** and **license**, while other aren't, despite them being as important
 as the mandatory ones. They also accept different values.
 
-- **username**: String with the username of the NApp creator. While uploading your
-  NApp this field must match your username on the napps server.
+- **username**: String with the username of the NApp creator (required GitHub account username). While publishing your
+  NApp to github it should match with your GitHub account username.
 
 - **name**: String with the name of the NApp.
 
@@ -102,7 +102,7 @@ as the mandatory ones. They also accept different values.
   `Semantic Versioning <http://semver.org/>`_.
 
 - **napp_dependencies**: A list of other NApps that are required by your NApp,
-  on the form ``["<username>/MyfirstNapp", "<other_username>/<other_name>", ...]``
+  on the form ``["<username>/my_first_napp", "<other_username>/<other_name>", ...]``
 
 - **license**: The license of your NApp (*GPL*, *MIT*, *APACHE*, etc).
 
@@ -118,7 +118,7 @@ So, here is the **kytos.json** that we have initially generated.
 
   {
     "username": "<username>",
-    "name": "MyfirstNapp",
+    "name": "my_first_napp",
     "description": "This is my first NApp, I have built it while doing a Kytos Tutorial.",
     "version": "",
     "napp_dependencies": [],
@@ -133,7 +133,7 @@ And here are an example of how we can complete this file:
 
   {
     "username": "<username>",
-    "name": "MyfirstNapp",
+    "name": "my_first_napp",
     "description": "This is my first NApp, I have built it while doing a Kytos Tutorial.",
     "version": "0.0.1",
     "napp_dependencies": [],
@@ -146,7 +146,7 @@ README.rst
 ==========
 
 Among other things, the **README.rst** will be presented as the main content of
-the NApp page on |github|_  (https://github.com/<username>/MyfirstNapp).
+the NApp page on |github|_  (https://github.com/<username>/my_first_napp).
 
 We recommend two initial sections, **Overview** and **Requirements**. The first
 will contain a more complete description of your NApp, while the latter will
@@ -177,9 +177,9 @@ After creating repository follow the below commands to initialize and push your 
 
 .. code-block:: console
 
-  $ cd ~/tutorials/<username>/MyfirstNapp
+  $ cd ~/tutorials/<username>/my_first_napp
   $ git init
-  $ git remote add origin https://github.com/<username>/MyfirstNapp.git
+  $ git remote add origin https://github.com/<username>/my_first_napp.git
   $ git add .
   $ git commit -m "<you commit message>"
   $ git push -u origin master
@@ -209,8 +209,8 @@ Now that you have published your NApp, you can find your NApp at |kytos_page|_, 
 
 .. code-block:: console
 
-  $ git clone https://github.com/<username>/MyfirstNapp.git
-  $ cd MyfirstNapp
+  $ git clone https://github.com/<username>/my_first_napp.git
+  $ cd my_first_napp
   $ python setup.py develop
 
 
@@ -227,7 +227,7 @@ Now that your NApp is Intalled you can view in your console by using below comma
    [i-]  | kytos/of_l2ls             | An L2 learning switch application for OpenFlow swi...
    [i-]  | kytos/of_lldp             | Discovers switches and hosts in the network using ...
    [i-]  | kytos/of_stats            | Provide statistics of openflow switches.
-   [ie]  | <username>/MyfirstNapp         | Description of your Napp
+   [ie]  | <username>/my_first_napp  | Description of your Napp
    [i-]  | kytos/topology            | Keeps track of links between hosts and switches. R...
 
   Status: (i)nstalled, (e)nabled
