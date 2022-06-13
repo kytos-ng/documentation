@@ -37,11 +37,8 @@ the controller or from the switches. In this situation, it is desirable to have
 a NApp that can run repeatedly without creating complex loops. Kytos provides
 the necessary tools to quick and easily create such a NApp.
 
-Before proceeding to the next section of this tutorial, go to the
-|napps_server_sign_up| in order to create a user for you on our
-|napps_server|_. After you submit the form you will receive an email to confirm
-your registration. Click on the link present on the email body and, after
-seeing the confirmation message on the screnn, go to the next section.
+Before proceeding to the next section of this tutorial, make sure you have a GitHub account, if not please follow steps in this |Link|_ to do so.
+Use your GitHub account *username* whereever mentioned *username* in this tutorial.
 
 ***********************
 Creating a looping NApp
@@ -244,35 +241,9 @@ To install locally, you have to run the following commands:
   $ cd ~/tutorials/<username>/loopnapp
   $ python3 setup.py develop
 
-To install remotely, you have to publish it first:
+To install remotely, you have to publish it first. Follow the instructions in this |Link|_ to publish as well as install your NApp.
 
-.. code-block:: console
-
-  $ cd ~/tutorials/<username>/loopnapp
-  $ kytos napps upload
-  Enter the username: <username>
-  Enter the password for <username>: <password>
-  SUCCESS: NApp <username>/loopnapp uploaded.
-
-Now that you have published your NApp, you can access |napps_server|_ and see
-that it was sent. After that, you can install it using the ``kytos`` command
-line from the ``kytos-utils`` package:
-
-.. code-block:: console
-
-  $ cd ~/tutorials
-  $ kytos napps install <username>/loopnapp
-  INFO  NApp <username>/loopnapp:
-  INFO    Searching local NApp...
-  INFO    Found and installed.
-  INFO    Enabling...
-  INFO    Enabled.
-
-.. NOTE:: This will try to get this napp from your current directory, then
-   install it into your system. The NApp will also be enabled and immediately
-   executed.
-
-You can now see your NApp installed and enabled by running the command:
+You can now see your NApp installed and enabled, by running the command:
 
 .. code-block:: console
 
@@ -331,3 +302,6 @@ running periodically. If you want to change the interval later, modify only the
 
 .. |napps_server_sign_up| replace:: **sign_up**
 .. _napps_server_sign_up: https://napps.kytos.io/signup/
+
+.. |Link| replace:: *Link*
+.. _Link: https://github.com/kytos-ng/documentation/blob/master/tutorials/napps/publishing_your_napp.rst
