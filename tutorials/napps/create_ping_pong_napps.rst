@@ -62,7 +62,7 @@ ping events periodically. While the second NApp will be called **pong**, and it
 will listen to the ping events and register a pong message in the Kytos logger.
 
 Before proceeding to the next section of this tutorial, make sure you have a GitHub account, if not please follow steps in this |Link|_ to do so.
-Use your GitHub account *username* whereever mentioned *username* in this tutorial.
+Use your GitHub account *username* wherever mentioned *username* in this tutorial.
 
 *****************
 The **Ping** NApp

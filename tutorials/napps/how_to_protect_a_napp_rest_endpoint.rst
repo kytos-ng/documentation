@@ -47,7 +47,7 @@ decorator. More information about this module can be found in
 the |protect_rest|_ and in the |auth|_.
 
 Before proceeding to the next section of this tutorial, make sure you have a GitHub account, if not please follow steps in this |Link|_ to do so.
-Use your GitHub account *username* whereever mentioned *username* in this tutorial.
+Use your GitHub account *username* wherever mentioned *username* in this tutorial.
 
 
 *************************

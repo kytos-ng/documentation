@@ -44,7 +44,7 @@ problem, in a way that NApps can work together to solve a bigger problem,
 following the |dotdiw|_.
 
 Before proceeding to the next section of this tutorial, make sure you have a GitHub account, if not please follow steps in this |Link|_ to do so.
-Use your GitHub account *username* whereever mentioned *username* in this tutorial.
+Use your GitHub account *username* wherever mentioned *username* in this tutorial.
 
 .. CAUTION:: Kytos NApps repository is still in beta stage.
 

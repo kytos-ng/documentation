@@ -38,7 +38,7 @@ a NApp that can run repeatedly without creating complex loops. Kytos provides
 the necessary tools to quick and easily create such a NApp.
 
 Before proceeding to the next section of this tutorial, make sure you have a GitHub account, if not please follow steps in this |Link|_ to do so.
-Use your GitHub account *username* whereever mentioned *username* in this tutorial.
+Use your GitHub account *username* wherever mentioned *username* in this tutorial.
 
 ***********************
 Creating a looping NApp
