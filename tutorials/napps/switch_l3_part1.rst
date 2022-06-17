@@ -63,11 +63,7 @@ network.
 .. ATTENTION:: This NApp was designed for instructional purposes. Running it in
     production environments may lead to unwanted behavior.
 
-Before proceeding to the next section of this tutorial, go to the
-|napps_server_sign_up| in order to create a user for you on our
-|napps_server|_. After you submit the form you will receive an email to confirm
-your registration. Click on the link present on the email body and, after
-seeing the confirmation message on the screnn, go to the next section.
+
 
 ******************
 Creating your NApp
@@ -111,18 +107,17 @@ Create an L3 switching table
 ============================
 
 First of all, you will create an L3 table for each switch that connects to the
-controller. When a new switch is connected, *Kytos* generates a ``core.switch.new``
+controller. When a new switch is connected, *Kytos* generates a ``of_core.handshake.completed``
 KytosEvent. Your NApp will have a method to deal with those.
 
 The L3 table will be a Python dictionary, mapping IP addresses to switch ports.
 
 .. code-block:: python3
 
-  @listen_to('kytos/core.switch.new')
-  def initialize_switch(self, event):
-      switch = event.content['switch']
-      switch.l3_table = {}
-
+  @listen_to("kytos/of_core.handshake.completed")
+    def create_switching_table(self, event):
+        switch = event.content["switch"]
+        switch.l3_table = {}
       # (Continues...)
 
 
@@ -140,19 +135,29 @@ L3 switch will have *proactive* flows matching ARP.
 
 .. code-block:: python3
 
-  @listen_to('kytos/core.switch.new')
-  def initialize_switch(self, event):
-      # (...)
+  @listen_to("kytos/of_core.handshake.completed")
+  def create_switching_table(self, event):
+      switch = event.content["switch"]
+      switch.l3_table = {}
 
       arp_flow_mod = FlowMod()
       arp_flow_mod.command = FlowModCommand.OFPFC_ADD
-      arp_flow_mod.match = Match()
-      arp_flow_mod.match.dl_type = EtherType.ARP
-      arp_flow_mod.actions.append(ActionOutput(port=Port.OFPP_FLOOD))
-      event_out = KytosEvent(name=('<username>/of_l3ls.messages.out.'
-                                   'ofpt_flow_mod'),
-                             content={'destination': switch.connection,
-                                      'message': arp_flow_mod})
+      arp_flow_mod.priority = 10000
+      oxmtlv1 = OxmTLV(
+          oxm_class=OxmClass.OFPXMC_OPENFLOW_BASIC,
+          oxm_field=OxmOfbMatchField.OFPXMT_OFB_ETH_TYPE,
+          oxm_hasmask=False,
+          oxm_value=EtherType.ARP.value.to_bytes(2, "big"),
+      )
+      match = Match(match_type=MatchType.OFPMT_OXM, oxm_match_fields=[oxmtlv1])
+      arp_flow_mod.match = match
+      action_output = ActionOutput(port=PortNo.OFPP_FLOOD)
+      instructions = [InstructionApplyAction([action_output])]
+      arp_flow_mod.instructions = instructions
+      event_out = KytosEvent(
+          name=("<username>/of_l3ls.messages.out." "ofpt_flow_mod"),
+          content={"destination": switch.connection, "message": arp_flow_mod},
+      )
       self.controller.buffers.msg_out.put(event_out)
 
 
@@ -169,45 +174,27 @@ L3 table. The needed changes are shown below:
 
 .. code-block:: python3
 
-  @listen_to('kytos/of_core.v0x01.messages.in.ofpt_packet_in')
+
+  @listen_to("kytos/of_core.v0x04.messages.in.ofpt_packet_in")
   def handle_packet_in(self, event):
-      #(...)
+      packet_in = event.content["message"]
+
+      ethernet = Ethernet()
       ethernet.unpack(packet_in.data.value)
-  
-      # Add the unpack here
-      if ethernet.ether_type = EtherType.IPV4
+
+      if ethernet.ether_type.value == EtherType.IPV4:
           ipv4 = IPv4()
           ipv4.unpack(ethernet.data.value)
-          
-          in_port = packet_in.in_port.value
-          switch = event.source.switch
-          switch.l3_table[ipv4.source] = in_port
-          log.info('Packet received from %s to %s.', ipv4.source,
-                   ipv4.destination)
 
-          # To look for the port, we will use the dictionary's get() method.
-          dest_port = switch.l3_table.get(ipv4.destination, None)
+          in_port = packet_in.in_port
+          switch = event.source.switch
+          dest_port = switch.l3_table.get(ipv4.destination)
+          log.info(f"Packet received from {ipv4.source} to {ipv4.destination}.")
+
 
 .. note:: All further code will be inside the above `if` statement. Check the
     final main.py file in case of doubt.
 
-.. warning:: As dest_port is now a single port and not a list, remove the
-    subscript (from dest_ports[0] to dest_port) in all the code.
-
-Installing FlowMods with L3 information
----------------------------------------
-To use L3 information on flows, you will change two lines used while constructing
-the FlowMod message.
-
-.. code-block:: python3
-
-  # flow_mod.match.dl_src = ethernet.source.value
-  # flow_mod.match.dl_dst = ethernet.destination.value
-  # Remove the lines above, using instead:
-  flow_mod.match.nw_src = ipv4.source
-  flow_mod.match.nw_dst = ipv4.destination
-
-You don't need to change the PacketOut code: it shall work the same.
 
 Final main.py file
 ==================
@@ -217,92 +204,145 @@ needed imports, and comments were removed to improve readability.
 
 .. code-block:: python3
 
-    from kytos.core import KytosEvent, KytosNApp, log
-    from kytos.core.helpers import listen_to
-    from pyof.foundation.network_types import Ethernet, EtherType, IPv4
-    from pyof.v0x01.common.action import ActionOutput
-    from pyof.v0x01.common.flow_match import Match
-    from pyof.v0x01.common.phy_port import Port
-    from pyof.v0x01.controller2switch.flow_mod import FlowMod, FlowModCommand
-    from pyof.v0x01.controller2switch.packet_out import PacketOut
+  import struct
+  from kytos.core import KytosEvent, KytosNApp, log
+  from kytos.core.helpers import listen_to
+  from pyof.foundation.network_types import Ethernet, EtherType, IPv4
+  from pyof.v0x04.common.action import ActionOutput
+  from pyof.v0x04.common.flow_match import (
+      Match,
+      OxmClass,
+      OxmOfbMatchField,
+      MatchType,
+      OxmTLV,
+  )
+  from pyof.v0x04.common.flow_instructions import (
+      InstructionApplyAction,
+  )
+  from pyof.v0x04.common.port import PortNo
+  from pyof.v0x04.controller2switch.flow_mod import FlowMod, FlowModCommand
+  from pyof.v0x04.controller2switch.packet_out import PacketOut
 
-    from napps.<username>.of_l3ls import settings
 
+  class Main(KytosNApp):
+      def setup(self):
+          pass
 
-    class Main(KytosNApp):
-        def setup(self):
-            pass
+      def execute(self):
+          pass
 
-        def execute(self):
-            pass
+      @listen_to("kytos/of_core.handshake.completed")
+      def create_switching_table(self, event):
+          switch = event.content["switch"]
+          switch.l3_table = {}
 
-        @listen_to('kytos/core.switch.new')
-        def create_switching_table(self, event):
-            switch = event.content['switch']
-            switch.l3_table = {}
-            
-            arp_flow_mod = FlowMod()
-            arp_flow_mod.command = FlowModCommand.OFPFC_ADD
-            arp_flow_mod.match = Match()
-            arp_flow_mod.match.dl_type = EtherType.ARP
-            arp_flow_mod.actions.append(ActionOutput(port=Port.OFPP_FLOOD))
-            event_out = KytosEvent(name=('<username>/of_l3ls.messages.out.'
-                                   'ofpt_flow_mod'),
-                             content={'destination': switch.connection,
-                                      'message': arp_flow_mod})
-            self.controller.buffers.msg_out.put(event_out)
+          arp_flow_mod = FlowMod()
+          arp_flow_mod.command = FlowModCommand.OFPFC_ADD
+          arp_flow_mod.priority = 10000
+          oxmtlv1 = OxmTLV(
+              oxm_class=OxmClass.OFPXMC_OPENFLOW_BASIC,
+              oxm_field=OxmOfbMatchField.OFPXMT_OFB_ETH_TYPE,
+              oxm_hasmask=False,
+              oxm_value=EtherType.ARP.value.to_bytes(2, "big"),
+          )
+          match = Match(match_type=MatchType.OFPMT_OXM, oxm_match_fields=[oxmtlv1])
+          arp_flow_mod.match = match
+          action_output = ActionOutput(port=PortNo.OFPP_FLOOD)
+          instructions = [InstructionApplyAction([action_output])]
+          arp_flow_mod.instructions = instructions
+          event_out = KytosEvent(
+              name=("<username>/of_l3ls.messages.out." "ofpt_flow_mod"),
+              content={"destination": switch.connection, "message": arp_flow_mod},
+          )
+          self.controller.buffers.msg_out.put(event_out)
 
-        @listen_to('kytos/of_core.v0x01.messages.in.ofpt_packet_in')
-        def handle_packet_in(self, event):
-            packet_in = event.content['message']
+          flow_mod_miss_entry = FlowMod()
+          flow_mod_miss_entry.command = FlowModCommand.OFPFC_ADD
+          flow_mod_miss_entry.match = Match()
+          action_output = ActionOutput(port=PortNo.OFPP_CONTROLLER)
+          instructions = [InstructionApplyAction([action_output])]
+          flow_mod_miss_entry.instructions = instructions
+          event_out = KytosEvent(
+              name=("<username>/of_l3ls.messages.out." "ofpt_flow_mod"),
+              content={"destination": switch.connection, "message": flow_mod_miss_entry},
+          )
+          self.controller.buffers.msg_out.put(event_out)
 
-            ethernet = Ethernet()
-            ethernet.unpack(packet_in.data.value)
+      @listen_to("kytos/of_core.v0x04.messages.in.ofpt_packet_in")
+      def handle_packet_in(self, event):
+          packet_in = event.content["message"]
 
-            if ethernet.ether_type.value == EtherType.IPV4:
-                ipv4 = IPv4()
-                ipv4.unpack(ethernet.data.value)
+          ethernet = Ethernet()
+          ethernet.unpack(packet_in.data.value)
 
-                in_port = packet_in.in_port.value
-                switch = event.source.switch
-                switch.l3_table[ipv4.source] = in_port
-                log.info('Packet received from %s to %s.', ipv4.source,
-                         ipv4.destination)
+          if ethernet.ether_type.value == EtherType.IPV4:
+              ipv4 = IPv4()
+              ipv4.unpack(ethernet.data.value)
 
-                dest_port = switch.l3_table.get(ipv4.destination, None)
+              in_port = packet_in.in_port
+              switch = event.source.switch
+              dest_port = switch.l3_table.get(ipv4.destination)
+              log.info(f"Packet received from {ipv4.source} to {ipv4.destination}.")
 
-                if dest_port is not None:
-                    log.info('%s is at port %d.', ipv4.destination, dest_port)
-                    flow_mod = FlowMod()
-                    flow_mod.command = FlowModCommand.OFPFC_ADD
-                    flow_mod.match = Match()
-                    flow_mod.match.nw_src = ipv4.source
-                    flow_mod.match.nw_dst = ipv4.destination
-                    flow_mod.match.dl_type = ethernet.ether_type
-                    flow_mod.actions.append(ActionOutput(port=dest_port))
-                    event_out = KytosEvent(name=('<username>/of_l3ls.messages.out.'
-                                                 'ofpt_flow_mod'),
-                                           content={'destination': event.source,
-                                                    'message': flow_mod})
-                    self.controller.buffers.msg_out.put(event_out)
-                    log.info('Flow installed! Subsequent packets will be sent directly.')
+              if ipv4.source not in switch.l3_table:
+                  switch.l3_table[ipv4.source] = in_port
+                  log.info(f"{ipv4.source} is at port {in_port}.")
+                  flow_mod = FlowMod()
+                  flow_mod.command = FlowModCommand.OFPFC_ADD
+                  oxmtlv1 = OxmTLV(
+                      oxm_class=OxmClass.OFPXMC_OPENFLOW_BASIC,
+                      oxm_field=OxmOfbMatchField.OFPXMT_OFB_ETH_TYPE,
+                      oxm_hasmask=False,
+                      oxm_value=EtherType.IPV4.value.to_bytes(2, "big"),
+                  )
+                  oxmtlv2 = OxmTLV(
+                      oxm_class=OxmClass.OFPXMC_OPENFLOW_BASIC,
+                      oxm_field=OxmOfbMatchField.OFPXMT_OFB_IPV4_SRC,
+                      oxm_hasmask=False,
+                      oxm_value=struct.pack(
+                          "bbbb", *[int(val) for val in ipv4.source.split(".")]
+                      ),
+                  )
+                  oxmtlv3 = OxmTLV(
+                      oxm_class=OxmClass.OFPXMC_OPENFLOW_BASIC,
+                      oxm_field=OxmOfbMatchField.OFPXMT_OFB_IPV4_DST,
+                      oxm_hasmask=False,
+                      oxm_value=struct.pack(
+                          "bbbb", *[int(val) for val in ipv4.destination.split(".")]
+                      ),
+                  )
+                  match = Match(
+                      match_type=MatchType.OFPMT_OXM,
+                      oxm_match_fields=[oxmtlv1, oxmtlv2, oxmtlv3],
+                  )
+                  flow_mod.match = match
+                  instructions = [InstructionApplyAction([ActionOutput(port=in_port)])]
+                  flow_mod.instructions = instructions
+                  event_out = KytosEvent(
+                      name=("<username>/of_l3ls.messages.out." "ofpt_flow_mod"),
+                      content={"destination": event.source, "message": flow_mod},
+                  )
+                  self.controller.buffers.msg_out.put(event_out)
+                  log.info(
+                      f"Flow installed! Subsequent packets from {ipv4.source} "
+                      f"to {ipv4.destination} will be sent directly."
+                  )
 
-                packet_out = PacketOut()
-                packet_out.buffer_id = packet_in.buffer_id
-                packet_out.in_port = packet_in.in_port
-                packet_out.data = packet_in.data
+              packet_out = PacketOut()
+              packet_out.buffer_id = packet_in.buffer_id
+              packet_out.in_port = packet_in.in_port
+              packet_out.data = packet_in.data
 
-                port = dest_port if dest_port is not None else Port.OFPP_FLOOD
-                packet_out.actions.append(ActionOutput(port=port))
-                event_out = KytosEvent(name=('<username>/of_l3ls.messages.out.'
-                                             'ofpt_packet_out'),
-                                       content={'destination': event.source,
-                                                'message': packet_out})
+              port = dest_port if dest_port is not None else PortNo.OFPP_FLOOD
+              packet_out.actions.append(ActionOutput(port=port))
+              event_out = KytosEvent(
+                  name=("<username>/of_l3ls.messages.out." "ofpt_packet_out"),
+                  content={"destination": event.source, "message": packet_out},
+              )
+              self.controller.buffers.msg_out.put(event_out)
 
-                self.controller.buffers.msg_out.put(event_out)
-
-        def shutdown(self):
-            pass
+      def shutdown(self):
+          pass
 
 
 
@@ -365,18 +405,9 @@ To install locally, you have to run the following commands:
   $ cd ~/tutorials/<username>/of_l3ls
   $ python3 setup.py develop
 
-To install remotely, you have to publish it first:
+To install remotely, you have to publish it first. Follow the instructions in this |link|_ to publish as well as install your NApp.
 
-.. code-block:: console
-
-  $ cd ~/tutorials/<username>/of_l3ls
-  $ kytos napps upload
-  Enter the username: <username>
-  Enter the password for <username>: <password>
-  SUCCESS: NApp <username>/of_l3ls uploaded.
-
-Now that you have published your NApp, you can access |napps_server|_ and see
-that it was sent. After that, install and run the *<username>/of_l3ls* NApp:
+Now that you have published your NApps, You can now see your NApp installed and enabled, by running the command:
 
 .. code-block:: console
 
@@ -448,10 +479,13 @@ Good job!
 .. _dev_env: http://tutorials.kytos.io/napps/development_environment_setup/
 
 .. |l2_tutorial| replace:: *L2 Learning Switch tutorial*
-.. _l2_tutorial: http://tutorials.kytos.io/napps/switch_l2/
+.. _l2_tutorial: https://github.com/kytos-ng/documentation/blob/master/tutorials/napps/switch_l2.rst
 
 .. |napps_server| replace:: *NApps Server*
 .. _napps_server: http://napps.kytos.io
 
 .. |napps_server_sign_up| replace:: **sign_up**
 .. _napps_server_sign_up: https://napps.kytos.io/signup/
+
+.. |link| replace:: *Link*
+.. _link: https://github.com/kytos-ng/documentation/blob/master/tutorials/napps/publishing_your_napp.rst
