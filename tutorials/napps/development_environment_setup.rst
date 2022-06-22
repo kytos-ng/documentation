@@ -287,7 +287,7 @@ Installing docker-compose
 
 `Install docker-compose <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04>`_ (Follow Step 1 only for successful docker-compose installation)
 
-After installing docker and docker-compose you can follow this link to setup Kytos with MongoDB: https://github.com/kytos-ng/kytos#how-to-use-with-mongodb
+After installing docker and docker-compose you can follow this link to setup Kytos with MongoDB: `Kytos-MongoDB <https://github.com/kytos-ng/kytos#how-to-use-with-mongodb>`_
 
 .. include:: ../back_to_list.rst
 
