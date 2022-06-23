@@ -50,7 +50,7 @@ Install the dependencies necessary to build Python:
 
  sudo add-apt-repository ppa:deadsnakes/ppa
  sudo apt update
- sudo apt install python3.9 
+ sudo apt install python3.9 python3.9-dev python3.9-venv
 
 Required packages
 =================
