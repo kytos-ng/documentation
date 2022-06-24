@@ -170,6 +170,26 @@ later in the following tutorials.
 
 Install the NApps cloning from GitHub and running python3 setup.py develop
 
+Currently, flow_manager and topology requires MongoDB to be setup. so before installing the Napps follow the instructions below
+
+How to use with MongoDB
+=======================
+
+Kytos with MongoDB requires docker and docker-compose to be installed on your linux environment. The following tutorials have been tested on Ubuntu 20.0.4 for docker and docker-compose
+
+Installing docker
+-----------------
+
+`Install docker <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04>`_ (Follow till Step 3 for installing required docker dependencies)
+
+Installing docker-compose
+-------------------------
+
+`Install docker-compose <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04>`_ (Follow Step 1 only for successful docker-compose installation)
+
+After installing docker and docker-compose you can follow this link to setup Kytos with MongoDB: `Kytos-MongoDB <https://github.com/kytos-ng/kytos#how-to-use-with-mongodb>`_
+
+
 of_core, flow_manager, topology, of_lldp, of_l2ls:
 
 .. code-block:: shell
@@ -193,31 +213,14 @@ If you wish to disable all NApps you can use the following command, or for an in
 
   $ kytos napps disable all
 
-Now open another terminal window and run the following command to start the kytos server
+Now open another terminal window and run the following command to start the kytos server if it is not already running
 
 .. code-block:: console
 
-  $ kytosd -f
+  $ kytosd -f --database mongodb
 
 That's it! you can type ``quit`` to exit
 Kytos.
-
-How to use with MongoDB
-=======================
-
-Kytos with MongoDB requires docker and docker-compose to be installed on your linux environment. The following tutorials have been tested on Ubuntu 20.0.4 for docker and docker-compose
-
-Installing docker
------------------
-
-`Install docker <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04>`_ (Follow till Step 3 for installing required docker dependencies)
-
-Installing docker-compose
--------------------------
-
-`Install docker-compose <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04>`_ (Follow Step 1 only for successful docker-compose installation)
-
-After installing docker and docker-compose you can follow this link to setup Kytos with MongoDB: `Kytos-MongoDB <https://github.com/kytos-ng/kytos#how-to-use-with-mongodb>`_
 
 
 One more step: Mininet.
