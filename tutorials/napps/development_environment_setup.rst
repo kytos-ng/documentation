@@ -170,7 +170,7 @@ later in the following tutorials.
 
 Install the NApps cloning from GitHub and running python3 setup.py develop
 
-Currently, flow_manager and topology requires MongoDB to be setup. so before installing the Napps follow the instructions below
+Currently, flow_manager and topology require MongoDB to be setup. Before installing the Napps, follow the instructions below
 
 How to use with MongoDB
 =======================
