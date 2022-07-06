@@ -12,7 +12,7 @@ Overview
 ********
 
 On this tutorial you will learn how to publish your NApp to a GitHub
-repository in addition to that, share you NApp with the Kytos Community and also make
+repository. In addition to that, share you NApp with the Kytos Community and also make
 easier for you to install it on your **Kytos** instance.
 
 The average time to go throught it is: ``5 min``
@@ -37,9 +37,9 @@ Now that you have learned how to install the environment and how to create your
 own NApp, you can publish it on |github|_.
 
 Before proceeding to the next section of this tutorial, go to |github_signup|_ page
-in order to create a github account. After you submit with the required fields, you will be asking
-to verify your email with text message sent to your email, After entering the code you will be
-redirected to github home page.
+in order to create a github account. After you submit with the required fields, you will be asked
+to verify your email with text message you received. After entering the code you will be
+redirected to GitHub home page.
 
 ******************
 Your NApp metadata
@@ -173,7 +173,7 @@ Uploading the NApp
 
 Your NApp is now ready to be uploaded. 
 Before that, you need to create a repository with NApp name on github.
-After creating repository follow the below commands to initialize and push your NApp to github.
+After creating repository, follow the below commands to initialize and push your NApp to github.
 
 .. code-block:: console
 
@@ -191,7 +191,7 @@ You will be asked to input your username and password of github, here password i
 
   Enter password: <token>
 
-After finishing the above steps your napp will be pushed to github and your will be able to view it in your repository.
+After finishing the above steps your NApp will be pushed to github and your will be able to view it in your repository.
 Follow the instructions on this |github_topic|_ to include topic name 'kytos-napp' to your repository.
 
 
@@ -202,7 +202,7 @@ Your NApp is now uploaded. You can see your NApp on the web: https://github.com/
 Search for and Install a remote NApp
 ************************************
 
-Now that you have published your NApp, you can find your NApp at |kytos_page|_, you can also look for other NApps published.
+Now that you have published your NApp, you can find it at |kytos_page|_, where you can also look for other NApps published.
 
 * Select the napp you want to install
 * Clone the NApp you want to install by folowing below commands
@@ -214,7 +214,7 @@ Now that you have published your NApp, you can find your NApp at |kytos_page|_, 
   $ python setup.py develop
 
 
-Now that your NApp is Intalled you can view in your console by using below command
+Now that your NApp is Intalled you can view it in your console by using below command
 
 .. code-block:: console
 

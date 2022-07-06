@@ -349,7 +349,7 @@ To install remotely, you have to publish it first.
 
 Follow the intructions in this |Link|_ to publish your Napp
 
-Now that you have published your NApp. Install and run your *<username>/of_l2ls* NApp:
+Now that you have published your NApp, install and run it:
 
 .. code-block:: console
 
