@@ -424,7 +424,7 @@ To install locally, you have to run the following commands:
     $ python3 setup.py develop
   done
 
-To install remotely, you have to publish it first. Follow the instructions in this |Link|_ to publish as well as install your NApp.
+To install remotely, you have to publish them first. Follow the instructions in this |Link|_ to publish as well as install your NApps.
 
 Now that you have published your NApps, You can now see your NApp installed and enabled, by running the command:
 
