@@ -426,18 +426,6 @@ To install locally, you have to run the following commands:
 
 To install remotely, you have to publish them first. Follow the instructions in this |Link|_ to publish as well as install your NApps.
 
-Now that you have published your NApps, You can now see your NApp installed and enabled, by running the command:
-
-
-.. code-block:: console
-
-  $ cd ~/tutorials
-  $ kytos napps install <username>/ping <username>/pong
-
-.. NOTE:: This will try to get the NApps from the current directory and then
-   install and enable them into your system. The NApps will be executed as soon
-   as they are enabled.
-
 Now, your Ping and Pong NApps are installed, enabled, and being executed. You can see this
 by running the command:
 
