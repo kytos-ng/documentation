@@ -168,8 +168,6 @@ later in the following tutorials.
 
 .. NOTE:: Currently, NApps should be installed by cloning the source code and installing through the setup.py file
 
-Install the NApps cloning from GitHub and running python3 setup.py develop
-
 Currently, flow_manager and topology require MongoDB to be setup. Before installing the Napps, follow the instructions below
 
 How to use with MongoDB
