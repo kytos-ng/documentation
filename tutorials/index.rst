@@ -13,6 +13,5 @@
   ./napps/restful_statistics
   ./napps/publishing_your_napp
   ./napps/switch_l2
-  ./napps/switch_l3_part1
-  ./napps/switch_l3_part2
+  ./napps/switch_l3
   
