@@ -4,7 +4,7 @@
 .. _tutorial-create-l3-sw-1:
 
 ######################################
-Creating an L3 learning switch: Part 1
+Creating an L3 learning switch
 ######################################
 
 ********
@@ -70,7 +70,7 @@ Creating your NApp
 ******************
 
 First, create your NApp using the ``kytos`` command. Use your **<username>**
-(the one you have just registered) as the username and 'of_l3ls' as the NApp name,
+(the one you have just registered at github) as the username and 'of_l3ls' as the NApp name,
 as follows (don't forget to create the ``~/tutorials`` folder if it does not exist):
 
 .. code-block:: console
@@ -107,7 +107,7 @@ Create an L3 switching table
 ============================
 
 First of all, you will create an L3 table for each switch that connects to the
-controller. When a new switch is connected, *Kytos* generates a ``of_core.handshake.completed``
+controller. When a new switch is connected, and completes the OpenFlow handshake *Kytos* generates a ``of_core.handshake.completed``
 KytosEvent. Your NApp will have a method to deal with those.
 
 The L3 table will be a Python dictionary, mapping IP addresses to switch ports.
