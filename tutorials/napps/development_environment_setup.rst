@@ -48,48 +48,10 @@ Install the dependencies necessary to build Python:
 
 .. code-block:: console
 
+ sudo add-apt-repository ppa:deadsnakes/ppa
  sudo apt update
- sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev
+ sudo apt install python3.9 python3.9-dev python3.9-venv
 
-Download the latest release’s source code from the Python download page with wget :
-
-.. code-block:: console
- 
- wget https://www.python.org/ftp/python/3.9.1/Python-3.9.1.tgz
-
-Once the download is complete, extract the gzipped archive :
-
-.. code-block:: console
-
- tar -xf Python-3.9.1.tgz
-
-Switch to the Python source directory and run the configure script, which performs a number of checks to make sure all of the dependencies on your system are present:
-
-.. code-block:: console
-
- cd Python-3.9.1
- ./configure --enable-optimizations
-
-Start the Python 3.9 build process:
-
-.. code-block:: console
-
- make -j 12
-
-For faster build time, modify the -j to correspond to the number of cores in your processor. You can find the number by typing nproc.
-
-When the build process is complete, install the Python binaries by typing:
-
-.. code-block:: console
-
- sudo make altinstall
-
-That’s it. Python 3.9 has been installed and ready to be used. To verify it, type:
-
-.. code-block:: console
-
- python3.9 --version
- 
 Required packages
 =================
 
@@ -202,53 +164,63 @@ Installing the NApps from Kytos team
 ====================================
 
 We will now install some NApps developed by the Kytos team, which will be used
-later in the following tutorials. To enable NApps management, we need Kytos
-running, so open another terminal window, make sure your virtualenv is active
-and run:
+later in the following tutorials.
 
-.. code-block:: console
+.. NOTE:: Currently, NApps should be installed by cloning the source code and installing through the setup.py file
 
-  $ source test42/bin/activate
-  $ git clone https://github.com/kytos-ng/storehouse
-  $ cd storehouse
-  $ python3 setup.py develop
-  $ kytosd -f
+Currently, flow_manager and topology require MongoDB to be setup. Before installing the Napps, follow the instructions below
 
-.. NOTE:: The ``git clone`` and ``pip install -r`` step was done to install NApp
-    dependencies. Currently, NApps should be installed by cloning the source code and installing through the setup.py file
+How to use with MongoDB
+=======================
 
-.. NOTE:: Don't worry about the Kytos main screen for now: we will have it
-    explained, as well as NApp management, in the next tutorials.
+Kytos with MongoDB requires docker and docker-compose to be installed on your linux environment. The following tutorials have been tested on Ubuntu 20.0.4 for docker and docker-compose
 
-Now that Kytos is running, switch back to the previous window and install the
-NApps using the github command line utility.
+Installing docker
+-----------------
+
+`Install docker <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04>`_ (Follow till Step 3 for installing required docker dependencies)
+
+Installing docker-compose
+-------------------------
+
+`Install docker-compose <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04>`_ (Follow Step 1 only for successful docker-compose installation)
+
+After installing docker and docker-compose you can follow this link to setup Kytos with MongoDB: `Kytos-MongoDB <https://github.com/kytos-ng/kytos#how-to-use-with-mongodb>`_
 
 
 of_core, flow_manager, topology, of_lldp, of_l2ls:
 
 .. code-block:: shell
 
-  for repo in of_core storehouse flow_manager topology of_lldp of_l2ls; do
+  for repo in of_core flow_manager topology of_lldp of_l2ls; do
     git clone https://github.com/kytos-ng/"${repo}"
   done
 
 
 .. code-block:: shell
 
-  for repo in of_core storehouse flow_manager topology of_lldp of_l2ls; do
+  for repo in of_core flow_manager topology of_lldp of_l2ls; do
     cd "${repo}"
     python3 setup.py develop
     cd ..
   done
 
-now disable all napps
+If you wish to disable all NApps you can use the following command, or for an individual NApp you can use replace "all" with the NApp name
 
 .. code-block:: console
 
   $ kytos napps disable all
 
-That's it! Now, you can go back to the Kytos screen and type ``quit`` to exit
+Now open another terminal window and run the following command to start the kytos server if it is not already running
+
+.. code-block:: console
+
+  $ kytosd -f --database mongodb
+
+That's it! you can type ``quit`` to exit
 Kytos.
+
+
 One more step: Mininet.
 
 How to install Mininet
@@ -272,7 +244,7 @@ To test if the mininet is working for you, run the command:
 
 .. code-block:: console
 
-  $ sudo mn --test pingall
+  $ sudo mn --test pingall --controller=remote,ip=127.0.0.1,port=6653
   *** No default OpenFlow controller found for default switch!
   *** Falling back to OVS Bridge
   *** Creating network
@@ -308,6 +280,7 @@ To test if the mininet is working for you, run the command:
 
 To see more about Mininet, you can access the webpage `mininet.org
 <http://mininet.org/walkthrough/>`_.
+
 
 .. include:: ../back_to_list.rst
 
