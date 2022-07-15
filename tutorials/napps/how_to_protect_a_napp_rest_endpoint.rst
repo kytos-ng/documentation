@@ -46,6 +46,9 @@ and it can be optionally protected using the `@authenticated`
 decorator. More information about this module can be found in
 the |protect_rest|_ and in the |auth|_.
 
+Before proceeding to the next section of this tutorial, make sure you have a GitHub account, if not please follow steps in this |Link|_ to do so.
+Use your GitHub account *username* wherever mentioned *username* in this tutorial.
+
 
 *************************
 Creating your application
@@ -499,3 +502,6 @@ that you can use a REST client named |Postman|_ to test your application.
 
 .. |postman| replace:: *Postman*
 .. _postman: https://www.getpostman.com/
+
+.. |Link| replace:: *Link*
+.. _Link: https://github.com/kytos-ng/documentation/blob/master/tutorials/napps/publishing_your_napp.rst

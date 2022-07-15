@@ -326,6 +326,13 @@ Let's take a look at the terminal:
   2017-07-18 10:54:01,823 - INFO [kytos/of_core] (Thread-34) Connection ('127.0.0.1', 56658), Switch 00:00:00:00:00:00:00:01: OPENFLOW HANDSHAKE COMPLETE
 
 
+In case if you face any issues, execute the below command and follow this tutorial again.
+
+.. code-block:: console
+
+  $sudo mn --clean
+
+
 On Kytos logs you can see the logs of all enabled NApps.
 
 In the above output, the last four lines shows us that two new switches were

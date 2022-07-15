@@ -61,11 +61,8 @@ Back to the tutorial, the first NApp will be called **ping**, and it will send
 ping events periodically. While the second NApp will be called **pong**, and it
 will listen to the ping events and register a pong message in the Kytos logger.
 
-Before proceeding to the next section of this tutorial, go to the
-|napps_server_sign_up| in order to create a user for you on our
-|napps_server|_. After you submit the form you will receive an email to confirm
-your registration. Click on the link present on the email body and, after
-seeing the confirmation message on the screnn, go to the next section.
+Before proceeding to the next section of this tutorial, make sure you have a GitHub account, if not please follow steps in this |Link|_ to do so.
+Use your GitHub account *username* wherever mentioned *username* in this tutorial.
 
 *****************
 The **Ping** NApp
@@ -427,32 +424,7 @@ To install locally, you have to run the following commands:
     $ python3 setup.py develop
   done
 
-To install remotely, you have to publish them first:
-
-.. code-block:: console
-
-  for napp in ping pong; do
-    $ cd ~/tutorials/<username>/{napp}
-    $ kytos napps upload
-    Enter the username: <username>
-    Enter the password for <username>: <password>
-    SUCCESS: NApp <username>/{napp} uploaded.
-  done
-
-Now that you have published your NApps, you can access |napps_server|_ and see
-that they were sent. After that, you can install them using the ``kytos``
-command line from the ``kytos-utils`` package.
-
-To install and enable your NApps, run the commands below:
-
-.. code-block:: console
-
-  $ cd ~/tutorials
-  $ kytos napps install <username>/ping <username>/pong
-
-.. NOTE:: This will try to get the NApps from the current directory and then
-   install and enable them into your system. The NApps will be executed as soon
-   as they are enabled.
+To install remotely, you have to publish them first. Follow the instructions in this |Link|_ to publish as well as install your NApps.
 
 Now, your Ping and Pong NApps are installed, enabled, and being executed. You can see this
 by running the command:
@@ -523,3 +495,6 @@ logging them when received.
 
 .. |napps_server_sign_up| replace:: **sign_up**
 .. _napps_server_sign_up: https://napps.kytos.io/signup/
+
+.. |Link| replace:: *Link*
+.. _Link: https://github.com/kytos-ng/documentation/blob/master/tutorials/napps/publishing_your_napp.rst

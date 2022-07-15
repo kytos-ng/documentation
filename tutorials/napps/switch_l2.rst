@@ -46,18 +46,13 @@ the network automatically, identifying interfaces by their |macs|_, learning whe
 each one is located and installing reactive flows in switches, handling the traffic
 based on the source/destination MACs.
 
-Before proceeding to the next section of this tutorial, go to the
-|napps_server_sign_up| in order to create a user for you on our
-|napps_server|_. After you submit the form you will receive an email to confirm
-your registration. Click on the link present on the email body and, after
-seeing the confirmation message on the screnn, go to the next section.
 
 ******************
 Creating your NApp
 ******************
 
 First, create your NApp using the ``kytos`` command. Use use your **<username>**
-(the one you have just registered) as the username and 'of_l2ls' as the NApp name,
+(your GitHub username) as the username and 'of_l2ls' as the NApp name,
 as follows (don't forget to create the ``~/tutorials`` folder if it does not exist):
 
 .. code-block:: console
@@ -106,7 +101,7 @@ You can also add a log message to know when the controller receives a packet.
 
 .. code-block:: python3
 
-    @listen_to('kytos/of_core.v0x01.messages.in.ofpt_packet_in')
+    @listen_to('kytos/of_core.v0x04.messages.in.ofpt_packet_in')
     def handle_packet_in(self, event):
         packet_in = event.content['message']
 
@@ -149,7 +144,7 @@ that sent you the PacketIn, and put this event in the ``msg_out`` buffer.
 
 .. code-block:: python3
 
-    @listen_to('kytos/of_core.v0x01.messages.in.ofpt_packet_in')
+    @listen_to('kytos/of_core.v0x04.messages.in.ofpt_packet_in')
     def handle_packet_in(self, event):
         # (...)
 
@@ -191,7 +186,7 @@ Once again, create a KytosEvent and put it in the ``msg_out`` buffer.
 
 .. code-block:: python3
 
-    @listen_to('kytos/of_core.v0x01.messages.in.ofpt_packet_in')
+    @listen_to('kytos/of_core.v0x04.messages.in.ofpt_packet_in')
     def handle_packet_in(self, event):
         # (...)
 
@@ -224,12 +219,12 @@ needed imports, and comments were removed to improve readability.
   from kytos.core import KytosEvent, KytosNApp, log
   from kytos.core.helpers import listen_to
   from pyof.foundation.network_types import Ethernet
-  from pyof.v0x01.asynchronous.packet_in import PacketInReason
-  from pyof.v0x01.common.action import ActionOutput
-  from pyof.v0x01.common.flow_match import Match
-  from pyof.v0x01.common.phy_port import Port
-  from pyof.v0x01.controller2switch.flow_mod import FlowMod, FlowModCommand
-  from pyof.v0x01.controller2switch.packet_out import PacketOut
+  from pyof.v0x04.asynchronous.packet_in import PacketInReason
+  from pyof.v0x04.common.action import ActionOutput
+  from pyof.v0x04.common.flow_match import Match
+  from pyof.v0x04.common.phy_port import Port
+  from pyof.v0x04.controller2switch.flow_mod import FlowMod, FlowModCommand
+  from pyof.v0x04.controller2switch.packet_out import PacketOut
 
   from napps.<username>.of_l2ls import settings
 
@@ -242,7 +237,7 @@ needed imports, and comments were removed to improve readability.
       def execute(self):
           pass
 
-      @listen_to('kytos/of_core.v0x01.messages.in.ofpt_packet_in')
+      @listen_to('kytos/of_core.v0x04.messages.in.ofpt_packet_in')
       def handle_packet_in(self, event):
           packet_in = event.content['message']
 
@@ -350,18 +345,11 @@ To install locally, you have to run the following commands:
   $ cd ~/tutorials/<username>/of_l2ls
   $ python3 setup.py develop
 
-To install remotely, you have to publish it first:
+To install remotely, you have to publish it first.
 
-.. code-block:: console
+Follow the intructions in this |Link|_ to publish your Napp
 
-  $ cd ~/tutorials/<username>/of_l2ls
-  $ kytos napps upload
-  Enter the username: <username>
-  Enter the password for <username>: <password>
-  SUCCESS: NApp <username>/of_l2ls uploaded.
-
-Now that you have published your NApp, you can access |napps_server|_ and see
-that it was sent. After that, install and run the *<username>/of_l2ls* NApp:
+Now that you have published your NApp, install and run it:
 
 .. code-block:: console
 
@@ -440,3 +428,6 @@ Good job!
 
 .. |napps_server_sign_up| replace:: **sign_up**
 .. _napps_server_sign_up: https://napps.kytos.io/signup/
+
+.. |Link| replace:: *Link*
+.. _Link: https://github.com/kytos-ng/documentation/blob/master/tutorials/napps/publishing_your_napp.rst

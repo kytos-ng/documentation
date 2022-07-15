@@ -43,8 +43,8 @@ The idea of a NApp is to be as atomic as it can be, solving a small and specific
 problem, in a way that NApps can work together to solve a bigger problem,
 following the |dotdiw|_.
 
-Moreover, you can use and learn from NApps developed by the Kytos Community that
-are available at the NApps Server: http://napps.kytos.io.
+Before proceeding to the next section of this tutorial, make sure you have a GitHub account, if not please follow steps in this |Link|_ to do so.
+Use your GitHub account *username* wherever mentioned *username* in this tutorial.
 
 .. CAUTION:: Kytos NApps repository is still in beta stage.
 
@@ -330,19 +330,9 @@ To install locally, you have to run the following commands:
   $ cd ~/tutorials/<username>/helloworld
   $ python3 setup.py develop
 
-To install remotely, you have to publish it first:
+To install remotely, you have to publish it first. Follow the instructions in this |Link|_ to publish as well as install your NApp.
 
-.. code-block:: console
-
-  $ cd ~/tutorials/<username>/helloworld
-  $ kytos napps upload
-  Enter the username: <username>
-  Enter the password for <username>: <password>
-  SUCCESS: NApp <username>/helloworld uploaded.
-
-Now that you have published your NApp, you can access |napps_server|_ and see
-that it was sent. After that, you can install it using the ``kytos`` command
-line from the ``kytos-utils`` package:
+Now that you have published your NApps, You can now see your NApp installed and enabled, by running the command:
 
 .. code-block:: console
 
@@ -415,3 +405,6 @@ To see the shutdown message, type ``quit`` in the Kytos console:
 
 .. |napp_ipv6| replace:: *kytos/of_ipv6drop* napp
 .. _napp_ipv6: http://napps.kytos.io/kytos/of.ipv6drop/
+
+.. |Link| replace:: *Link*
+.. _Link: https://github.com/kytos-ng/documentation/blob/master/tutorials/napps/publishing_your_napp.rst

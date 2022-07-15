@@ -11,8 +11,8 @@ Publishing your NApp
 Overview
 ********
 
-On this tutorial you will learn how to publish your NApp on the |napps_server|_
-repository in order to share you NApp with the Kytos Community and also make
+On this tutorial you will learn how to publish your NApp to a GitHub
+repository. In addition to that, share you NApp with the Kytos Community and also make
 easier for you to install it on your **Kytos** instance.
 
 The average time to go throught it is: ``5 min``
@@ -26,34 +26,27 @@ What you will need
 What you will learn
 ===================
 
-* How to publish your NApp on the |napps_server|
-* How to install a NApp from |napps_server|
+* How to publish your NApp on the |github|_
+* How to install a NApp from |github_kytos|_
 
 ************
 Introduction
 ************
 
 Now that you have learned how to install the environment and how to create your
-own NApp, you can publish it on the |napps_server|_. The |napps_server|_ works
-similarly to the application stores for mobile operating systems, or packages
-repositories for linux distributions.
+own NApp, you can publish it on |github|_.
 
-The |napps_server|_ is a repository, provided by Kytos Team, used to publish
-NApps packages. It can be used by anyone interested. The |napps_server|_ web
-page provide several information about the published NApps.
-
-Before proceeding to the next section of this tutorial, go to the
-|napps_server_sign_up| in order to create a user for you on our
-|napps_server|_. After you submit the form you will receive an email to confirm
-your registration. Click on the link present on the email body and, after
-seeing the confirmation message on the screnn, go to the next section.
+Before proceeding to the next section of this tutorial, go to |github_signup|_ page
+in order to create a github account. After you submit with the required fields, you will be asked
+to verify your email with text message you received. After entering the code you will be
+redirected to GitHub home page.
 
 ******************
 Your NApp metadata
 ******************
 
 First of all, you need to create a NApp. So, let's start creating a new NApp
-using your **username** (the one you have just registered).
+using your **username** (username should be same as your github account username).
 
 .. code-block:: console
 
@@ -70,8 +63,8 @@ using your **username** (the one you have just registered).
    - at least three characters
   --------------------------------------------------------------
 
-The first question is related to your **username**. The second question is the
-name of your NApp, and, for now,
+The first question is related to your **username** (username should be same as your github account username).
+The second question is the name of your NApp, and, for now,
 we will just use ``my_first_napp`` as NApp name. The third question is related
 to your NApp description. Let's put some meaningful information over there.
 
@@ -97,8 +90,8 @@ The **kytos.json** file contains the fields *username*, *name* (NApp name),
 **name** and **license**, while other aren't, despite them being as important
 as the mandatory ones. They also accept different values.
 
-- **username**: String with the username of the NApp creator. While uploading your
-  NApp this field must match your username on the napps server.
+- **username**: String with the username of the NApp creator (required GitHub account username). While publishing your
+  NApp to github it should match with your GitHub account username.
 
 - **name**: String with the name of the NApp.
 
@@ -109,14 +102,14 @@ as the mandatory ones. They also accept different values.
   `Semantic Versioning <http://semver.org/>`_.
 
 - **napp_dependencies**: A list of other NApps that are required by your NApp,
-  on the form ``["<username>/<name>", "<other_username>/<other_name>", ...]``
+  on the form ``["<username>/my_first_napp", "<other_username>/<other_name>", ...]``
 
 - **license**: The license of your NApp (*GPL*, *MIT*, *APACHE*, etc).
 
 - **url**: If your NApp source code is maintained on a public repository, here
   comes its url.
 
-- **tags**: A list of tags to help catalog your NApp on the |napps_server|_ on
+- **tags**: A list of tags to help catalog your NApp on the github on
   the form ``["tag1", "tag2", ...]``
 
 So, here is the **kytos.json** that we have initially generated.
@@ -153,7 +146,7 @@ README.rst
 ==========
 
 Among other things, the **README.rst** will be presented as the main content of
-the NApp page on the NApps Server (https://napps.kytos.io/<username>/<name>).
+the NApp page on |github|_  (https://github.com/<username>/my_first_napp).
 
 We recommend two initial sections, **Overview** and **Requirements**. The first
 will contain a more complete description of your NApp, while the latter will
@@ -179,49 +172,53 @@ Uploading the NApp
 ******************
 
 Your NApp is now ready to be uploaded. 
-Before that, if you do not want to send some files to the server, add them to .gitignore.
-To upload your Napp, use the following command:
+Before that, you need to create a repository with NApp name on github.
+After creating repository, follow the below commands to initialize and push your NApp to github.
 
 .. code-block:: console
 
   $ cd ~/tutorials/<username>/my_first_napp
-  $ kytos napps upload
-  Enter the username: <username>
-  Enter the password for <username>: <password>
-  SUCCESS: NApp <username>/my_first_napp uploaded.
+  $ git init
+  $ git remote add origin https://github.com/<username>/my_first_napp.git
+  $ git add .
+  $ git commit -m "<you commit message>"
+  $ git push -u origin master
 
-You must fill **username** and **password** with the values you used to
-register your user on the |napps_server|_.
-
-Your NApp is now uploaded. You can see it on the web
-(`<https://napps.kytos.io/<username>/my_first_napp`) or search for it through
-the command line with the following command:
-
-.. code-block:: console
-
-  $ kytos napps search <username>/my_first_napp
-
-  Status |       NApp ID            |                     Description
-  =======+==========================+====================================================
-   [--]  | <username>/my_first_napp | This is my first NApp. I've built it as an examp...
+You will be asked to input your username and password of github, here password indicates generated token from github, View this |github_token|_ to generate your token.
 
 
-  Status: (i)nstalled, (e)nabled
+  Enter username: <username>
+
+  Enter password: <token>
+
+After finishing the above steps your NApp will be pushed to github and your will be able to view it in your repository.
+Follow the instructions on this |github_topic|_ to include topic name 'kytos-napp' to your repository.
+
+
+Your NApp is now uploaded. You can see your NApp on the web: https://github.com/topics/kytos-napp
+
 
 ************************************
 Search for and Install a remote NApp
 ************************************
 
-Now that you have published your NApp, you can install it by using the command
-``kytos napps install <username>/my_first_napp``.
+Now that you have published your NApp, you can find it at |kytos_page|_, where you can also look for other NApps published.
 
-You can also look for other NApps published on the |napps_server|_, by using
-the command ``kytos napps search`` followed by some keyword to match against
-the username, NApp name, description or tags.
+* Select the napp you want to install
+* Clone the NApp you want to install by folowing below commands
 
 .. code-block:: console
 
-  $ kytos napps search kytos
+  $ git clone https://github.com/<username>/my_first_napp.git
+  $ cd my_first_napp
+  $ python setup.py develop
+
+
+Now that your NApp is Intalled you can view it in your console by using below command
+
+.. code-block:: console
+
+  $ kytos napps list
 
   Status |          NApp ID          |                     Description
   =======+===========================+======================================================
@@ -230,9 +227,11 @@ the username, NApp name, description or tags.
    [i-]  | kytos/of_l2ls             | An L2 learning switch application for OpenFlow swi...
    [i-]  | kytos/of_lldp             | Discovers switches and hosts in the network using ...
    [i-]  | kytos/of_stats            | Provide statistics of openflow switches.
+   [ie]  | <username>/my_first_napp  | Description of your Napp
    [i-]  | kytos/topology            | Keeps track of links between hosts and switches. R...
 
   Status: (i)nstalled, (e)nabled
+
 
 .. |Tutorial_01| replace:: *Tutorial 01*
 .. _Tutorial_01: http://tutorials.kytos.io/napps/create_your_napp/
@@ -250,3 +249,22 @@ the username, NApp name, description or tags.
 
 .. |mininet| replace:: *Mininet*
 .. _mininet:  http://mininet.org/overview/
+
+.. |github| replace:: *Github*
+.. _github: http://github.com
+
+.. |github_kytos| replace:: *Github Kytos*
+.. _github_kytos: https://github.com/topics/kytos-napp
+
+.. |github_signup| replace:: *Github Signup*
+.. _github_signup: https://github.com/signup
+
+.. |github_token| replace:: *Link*
+.. _github_token: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+
+.. |github_topic| replace:: *Link*
+.. _github_topic: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/classifying-your-repository-with-topics
+
+.. |kytos_page| replace:: *Here*
+.. _kytos_page: https://github.com/topics/kytos-napp
+
