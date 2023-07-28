@@ -2,9 +2,8 @@
 # are required:
 
 # For building documentation
-sphinx>=1.5.6
+sphinx==6.2.1
+sphinx-rtd-theme==1.2.2
 # To run "make livehtml", build docs and refresh browser automatically when
 # files change
-sphinx-autobuild>=0.7.1
-sphinx-rtd-theme >= 0.2.4
-sphinx_bootstrap_theme==0.4.14
+sphinx-autobuild==2021.3.14
