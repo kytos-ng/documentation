@@ -175,6 +175,8 @@ How to use with MongoDB
 
 Kytos with MongoDB requires docker and docker-compose to be installed on your linux environment. The following tutorials have been tested on Ubuntu 20.0.4 for docker and docker-compose
 
+.. NOTE:: MongoDB 5.0+ requires a CPU that supports AVX instructions. Also, if you're running VirtualBox on Windows as host and a Ubuntu guest you'll need to disable Hyper-V.
+
 Installing docker
 -----------------
 
