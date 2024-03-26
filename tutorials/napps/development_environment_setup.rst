@@ -7,7 +7,7 @@
 Setting up your dev environment
 ###############################
 
-.. NOTE:: We tested this tutorial on Ubuntu 20.04 LTS, but feel free to adapt to your
+.. NOTE:: We tested this tutorial on Debian 12 bookworm, but feel free to adapt to your
   preferred Linux distribution.
 
 ********
@@ -38,28 +38,27 @@ Installing required dependencies
 ********************************
 
 In order to start using and coding with Kytos, you need a few required
-dependencies. One of them is Python 3.9.x
+dependencies. One of them is Python 3.11.x
 
 
-Installing Python 3.9.x
-=====================
+Installing Python 3.11.x
+========================
 
 Install the dependencies necessary to build Python:
 
 .. code-block:: console
 
- sudo add-apt-repository ppa:deadsnakes/ppa
- sudo apt update
- sudo apt install python3.9 python3.9-dev python3.9-venv
+  sudo apt update
+  sudo apt install python3.11-dev python3.11-venv
 
 Required packages
 =================
 
-The required Ubuntu packages can be installed by:
+The required Debian package can be installed by:
 
 .. code-block:: console
 
-  $ apt install git
+  sudo apt install git
 
 
 ********************************
@@ -85,12 +84,12 @@ by another name, if you wish):
 
 .. code-block:: console
 
-   $ python3.9 -m venv test42
+  python3.11 -m venv test42
 
 This command will create a virtualenv named *test42* and a folder with the same
 name for it.
 
-.. NOTE:: Kytos requires Python 3.9.x
+.. NOTE:: Kytos requires Python 3.11.x
 
 Removing a virtualenv
 ---------------------
@@ -105,7 +104,7 @@ If you want to use an existing environment you can use the following command:
 
 .. code-block:: console
 
-  $ source test42/bin/activate
+  source test42/bin/activate
 
 After that, your console prompt will show the activated virtualenv name between
 parenthesis. Now, update the *pip* package that is already installed in the
@@ -113,16 +112,16 @@ virtualenv, with setuptools and wheel as well:
 
 .. code-block:: console
 
-  (test42) $ pip3 install --upgrade pip setuptools wheel
+  (test42) pip install --upgrade pip setuptools wheel
 
 The parenthesis marker identifies that the test42 virtualenv is activated. If
 you want leave this virtualenv you can use the command ``deactivate``.
 After this, the virtualenv name will disappear from your prompt and you will be
-using your regular Ubuntu environment.
+using your regular Linux environment.
 
 .. note:: Inside the virtualenv, all pip packages will be installed within the
    *test42* folder. Outside the virtualenv, all pip packages will be installed
-   into the default system environment (standard Ubuntu folder).
+   into the default system environment (standard Linux folder).
 
 If you want to read more about it, please visit: |virtualenv|_ and
 |virtualenv_docs|_ pages.
@@ -156,7 +155,7 @@ procedure for each cloned repository, in order. Below we execute its commands.
 
     for repo in python-openflow kytos-utils kytos; do
       cd "${repo}"
-      python3 setup.py develop
+      python -m pip install --editable .
       cd ..
     done
 
@@ -173,24 +172,29 @@ Currently, flow_manager and topology require MongoDB to be setup. Before install
 How to use with MongoDB
 =======================
 
-Kytos with MongoDB requires docker and docker-compose to be installed on your linux environment. The following tutorials have been tested on Ubuntu 20.0.4 for docker and docker-compose
+Kytos with MongoDB requires docker and docker-compose to be installed on your linux environment. The following tutorials have been tested on Debian 12 for docker and docker-compose
 
 
 Installing docker
 -----------------
 
-`Install docker <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04>`_ (Follow till Step 3 for installing required docker dependencies)
+`Install docker <https://docs.docker.com/engine/install/debian/#install-using-the-repository/>`_
+
+Set docker as non-root
+----------------------
+
+`Set up non-root user <https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user/>`_ (Follow only the ``"Manage Docker as a non-root user"`` section)
 
 Installing docker-compose
 -------------------------
 
-`Install docker-compose <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04>`_ (Follow Step 1 only for successful docker-compose installation)
+`Install docker-compose <https://docs.docker.com/compose/install/linux/#install-using-the-repository>`_
 
 After installing docker and docker-compose you can follow this link to setup Kytos with MongoDB: `Kytos-MongoDB <https://github.com/kytos-ng/kytos#how-to-use-with-mongodb>`_
 
 .. NOTE:: MongoDB 5.0+ requires a CPU that supports AVX instructions. 
 
-    Also, if you're running VirtualBox on Windows as host and a Ubuntu guest you'll need to disable Hyper-V:
+    Also, if you're running VirtualBox on Windows as host and a Debian guest you'll need to disable Hyper-V:
     Find the Command Prompt icon, right click it and choose Run As Administrator.
     Enter this command: bcdedit /set hypervisorlaunchtype off.
     Some report this command was needed also: DISM /Online /Disable-Feature:Microsoft-Hyper-V.
