@@ -114,6 +114,9 @@ virtualenv, with setuptools and wheel as well:
 
   (test42) pip install --upgrade pip setuptools wheel
 
+Having this packages updated is important to avoid some conflicts. For more
+imformation check out `Python packaging documentation on setup.py <https://packaging.python.org/en/latest/discussions/setup-py-deprecated/>`_
+
 The parenthesis marker identifies that the test42 virtualenv is activated. If
 you want leave this virtualenv you can use the command ``deactivate``.
 After this, the virtualenv name will disappear from your prompt and you will be
@@ -214,7 +217,7 @@ of_core, flow_manager, topology, of_lldp, of_l2ls:
 
   for repo in of_core flow_manager topology of_lldp of_l2ls; do
     cd "${repo}"
-    python3 setup.py develop
+    python -m pip install --editable .
     cd ..
   done
 
