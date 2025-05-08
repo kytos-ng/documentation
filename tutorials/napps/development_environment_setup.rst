@@ -107,12 +107,12 @@ If you want to use an existing environment you can use the following command:
   source test42/bin/activate
 
 After that, your console prompt will show the activated virtualenv name between
-parenthesis. Now, update the *pip* package that is already installed in the
-virtualenv, with setuptools and wheel as well:
+parenthesis. Now, update the ``pip`` package that is already installed in the
+virtualenv, with ``setuptools`` and ``wheel`` as well to the following versions:
 
 .. code-block:: console
 
-  (test42) pip install --upgrade pip setuptools wheel
+  (test42) pip install pip==24.3.1 setuptools==75.6.0 wheel==0.45.1
 
 Having this packages updated is important to avoid some conflicts. For more
 imformation check out `Python packaging documentation on setup.py <https://packaging.python.org/en/latest/discussions/setup-py-deprecated/>`_
@@ -171,6 +171,21 @@ later in the following tutorials.
 .. NOTE:: Currently, NApps should be installed by cloning the source code and installing through the setup.py file
 
 Currently, flow_manager and topology require MongoDB to be setup. Before installing the Napps, follow the instructions below
+
+Running Unit Tests
+==================
+
+Python unit tests are run with *tox*, which will create its own virtual venv, isolating the testing libraries dependencies. If you need to run unit tests to validate code changes, first install tox and virtualenv with the following versions. You can still use the same ``test42`` venv to install ``tox``, having it in the same venv can be convenient, it's up to you:
+
+.. code-block:: console
+
+  (test42) pip install tox==4.13.0 virtualenv==20.25.1
+
+Once installed, to run the tests and linters:
+
+.. code-block:: console
+
+  (test42) tox
 
 How to use with MongoDB
 =======================
