@@ -112,7 +112,7 @@ virtualenv, with ``setuptools`` and ``wheel`` as well to the following versions:
 
 .. code-block:: console
 
-  (test42) pip install pip==24.3.1 setuptools==75.6.0 wheel==0.45.1
+  (test42) pip install pip==24.3.1 setuptools==75.6.0 wheel==0.46.3
 
 Having this packages updated is important to avoid some conflicts. For more
 imformation check out `Python packaging documentation on setup.py <https://packaging.python.org/en/latest/discussions/setup-py-deprecated/>`_
